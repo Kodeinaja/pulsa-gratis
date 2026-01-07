@@ -1,55 +1,121 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Pulsa & Paket Data</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      padding: 20px;
-    }
-    .card {
-      background: #fff;
-      padding: 20px;
-      margin-bottom: 15px;
-      border-radius: 8px;
-    }
-    .btn {
-      display: inline-block;
-      padding: 10px 15px;
-      background: #25d366;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 5px;
-      margin-top: 10px;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Struk Jaya Sentosa Digital</title>
+
+<style>
+body {
+    font-family: monospace;
+    background: #f0f0f0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 350px;
+    margin: auto;
+    background: #fff;
+    padding: 15px;
+}
+
+h2, h3 {
+    text-align: center;
+    margin: 5px 0;
+}
+
+hr {
+    border: none;
+    border-top: 1px dashed #000;
+}
+
+.label {
+    display: flex;
+    justify-content: space-between;
+}
+
+input {
+    width: 100%;
+    margin-bottom: 8px;
+    padding: 5px;
+}
+
+button {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+@media print {
+    button, input { display: none; }
+    body { background: white; }
+}
+</style>
 </head>
+
 <body>
 
-<h1>🔥 Jual Pulsa & Paket Data</h1>
-<p>Proses cepat, aman, terpercaya.</p>
+<div class="container">
+<h3>JAYA SENTOSA DIGITAL</h3>
+<p style="text-align:center">
+Fotocopy Jaya Sentosa Digital<br>
+Jl. Jokotole Omben Sampang<br>
+Telp: 081936425733
+</p>
 
-<div class="card">
-  <h3>Paket Data 10GB</h3>
-  <p>Harga: Rp25.000</p>
-  <a class="btn"
-     href="https://wa.me/6281936425733?text=ORDER%20PAKET%2010GB%0ANomor:%2008xxxxxxxx%0AStatus:%20Sudah%20Bayar">
-     Beli Sekarang
-  </a>
+<hr>
+
+<label>Produk</label>
+<input id="produk" placeholder="Telkomsel 50.000">
+
+<label>Nomor Tujuan</label>
+<input id="nomor" placeholder="08xxxxxxxxxx">
+
+<label>Total Bayar</label>
+<input id="total" placeholder="53000">
+
+<button onclick="cetak()">CETAK STRUK</button>
+
+<hr>
+
+<div id="struk" style="display:none">
+<p style="text-align:center">STRUK PEMBAYARAN</p>
+
+<div class="label"><span>Tanggal</span><span id="tgl"></span></div>
+<div class="label"><span>Admin</span><span>M. Sahal Failasuf</span></div>
+
+<hr>
+
+<div class="label"><span>Produk</span><span id="outProduk"></span></div>
+<div class="label"><span>No. Tujuan</span><span id="outNomor"></span></div>
+
+<hr>
+
+<div class="label"><strong>Total</strong><strong id="outTotal"></strong></div>
+
+<hr>
+<p style="text-align:center">
+Simpan struk ini sebagai<br>
+bukti pembayaran yang sah
+</p>
 </div>
 
-<div class="card">
-  <h3>Pulsa 20.000</h3>
-  <p>Harga: Rp22.000</p>
-  <a class="btn"
-     href="https://wa.me/6281936425733?text=ORDER%20PULSA%2020K%0ANomor:%2008xxxxxxxx%0AStatus:%20Sudah%20Bayar">
-     Beli Sekarang
-  </a>
 </div>
 
-<p>💳 Pembayaran via: Dana / OVO / GoPay</p>
+<script>
+function cetak() {
+    const now = new Date();
+    const tgl = now.toLocaleDateString('id-ID') + " " + now.toLocaleTimeString('id-ID');
+
+    document.getElementById("tgl").innerText = tgl;
+    document.getElementById("outProduk").innerText = document.getElementById("produk").value;
+    document.getElementById("outNomor").innerText = document.getElementById("nomor").value;
+    document.getElementById("outTotal").innerText = "Rp " + document.getElementById("total").value;
+
+    document.getElementById("struk").style.display = "block";
+    window.print();
+}
+</script>
 
 </body>
 </html>
