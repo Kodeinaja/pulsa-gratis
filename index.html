@@ -2,53 +2,49 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Struk Jaya Sentosa Digital</title>
+<title>Struk Jaya Sentosa Digital - 80mm</title>
 
 <style>
 body {
-    font-family: monospace;
-    background: #f0f0f0;
-    padding: 20px;
+  font-family: monospace;
+  background: #eee;
+  padding: 10px;
 }
 
 .container {
-    max-width: 350px;
-    margin: auto;
-    background: #fff;
-    padding: 15px;
+  width: 48ch; /* THERMAL 80mm */
+  background: #fff;
+  padding: 12px;
+  margin: auto;
 }
 
-h2, h3 {
-    text-align: center;
-    margin: 5px 0;
+.center { text-align: center; }
+.bold { font-weight: bold; }
+
+.line {
+  border-top: 1px dashed #000;
+  margin: 8px 0;
 }
 
-hr {
-    border: none;
-    border-top: 1px dashed #000;
+.row {
+  display: grid;
+  grid-template-columns: 12ch 1ch auto;
 }
 
-.label {
-    display: flex;
-    justify-content: space-between;
-}
-
-input {
-    width: 100%;
-    margin-bottom: 8px;
-    padding: 5px;
+input, button {
+  width: 100%;
+  margin-top: 6px;
+  padding: 6px;
+  font-family: monospace;
 }
 
 button {
-    width: 100%;
-    padding: 8px;
-    margin-top: 10px;
-    font-weight: bold;
+  font-weight: bold;
 }
 
 @media print {
-    button, input { display: none; }
-    body { background: white; }
+  input, button { display: none; }
+  body { background: white; }
 }
 </style>
 </head>
@@ -56,64 +52,93 @@ button {
 <body>
 
 <div class="container">
-<h3>JAYA SENTOSA DIGITAL</h3>
-<p style="text-align:center">
-Fotocopy Jaya Sentosa Digital<br>
-Jl. Jokotole Omben Sampang<br>
-Telp: 081936425733
-</p>
 
-<hr>
+<!-- INPUT -->
+<input id="produk" placeholder="Produk (contoh: XL Kuota Games + Utama 3GB 30 Hari)">
+<input id="nomor" placeholder="Nomor Tujuan">
+<input id="total" placeholder="Total Bayar (contoh: 22500)">
+<button onclick="proses()">CETAK & KIRIM WA</button>
 
-<label>Produk</label>
-<input id="produk" placeholder="Telkomsel 50.000">
+<div class="line"></div>
 
-<label>Nomor Tujuan</label>
-<input id="nomor" placeholder="08xxxxxxxxxx">
-
-<label>Total Bayar</label>
-<input id="total" placeholder="53000">
-
-<button onclick="cetak()">CETAK STRUK</button>
-
-<hr>
-
+<!-- STRUK -->
 <div id="struk" style="display:none">
-<p style="text-align:center">STRUK PEMBAYARAN</p>
 
-<div class="label"><span>Tanggal</span><span id="tgl"></span></div>
-<div class="label"><span>Admin</span><span>M. Sahal Failasuf</span></div>
+<div class="center bold">JAYA SENTOSA DIGITAL</div>
+<div class="center">Fotocopy Jaya Sentosa Digital</div>
+<div class="center">Jl. Jokotole Omben Sampang</div>
+<div class="center">Telp: 081936425733</div>
 
-<hr>
+<div class="line"></div>
 
-<div class="label"><span>Produk</span><span id="outProduk"></span></div>
-<div class="label"><span>No. Tujuan</span><span id="outNomor"></span></div>
+<div class="center bold">STRUK PEMBAYARAN</div>
 
-<hr>
-
-<div class="label"><strong>Total</strong><strong id="outTotal"></strong></div>
-
-<hr>
-<p style="text-align:center">
-Simpan struk ini sebagai<br>
-bukti pembayaran yang sah
-</p>
+<div class="row">
+  <span>Tanggal</span><span>:</span><span id="tgl"></span>
+</div>
+<div class="row">
+  <span>Admin</span><span>:</span><span>M. Sahal Failasuf</span>
 </div>
 
+<div class="line"></div>
+
+<div class="row">
+  <span>Produk</span><span>:</span><span id="outProduk"></span>
+</div>
+
+<div class="row">
+  <span>No Tujuan</span><span>:</span><span id="outNomor"></span>
+</div>
+
+<div class="line"></div>
+
+<div class="row bold">
+  <span>Total</span><span>:</span><span id="outTotal"></span>
+</div>
+
+<div class="line"></div>
+
+<div class="center">Simpan struk ini sebagai</div>
+<div class="center">bukti pembayaran yang sah</div>
+
+</div>
 </div>
 
 <script>
-function cetak() {
-    const now = new Date();
-    const tgl = now.toLocaleDateString('id-ID') + " " + now.toLocaleTimeString('id-ID');
+function proses() {
+  const produk = document.getElementById("produk").value;
+  const nomor = document.getElementById("nomor").value;
+  const total = document.getElementById("total").value;
 
-    document.getElementById("tgl").innerText = tgl;
-    document.getElementById("outProduk").innerText = document.getElementById("produk").value;
-    document.getElementById("outNomor").innerText = document.getElementById("nomor").value;
-    document.getElementById("outTotal").innerText = "Rp " + document.getElementById("total").value;
+  const now = new Date();
+  const tanggal = now.toLocaleDateString('id-ID') + " " + now.toLocaleTimeString('id-ID');
 
-    document.getElementById("struk").style.display = "block";
-    window.print();
+  document.getElementById("tgl").innerText = tanggal;
+  document.getElementById("outProduk").innerText = produk;
+  document.getElementById("outNomor").innerText = nomor;
+  document.getElementById("outTotal").innerText = "Rp " + total;
+
+  document.getElementById("struk").style.display = "block";
+
+  // AUTO PRINT
+  window.print();
+
+  // AUTO WHATSAPP
+  const pesan =
+`JAYA SENTOSA DIGITAL
+Jl. Jokotole Omben Sampang
+
+STRUK PEMBAYARAN
+Tanggal : ${tanggal}
+Produk  : ${produk}
+No Tujuan : ${nomor}
+Total   : Rp ${total}
+
+Terima kasih 🙏`;
+
+  const wa = "https://wa.me/62" + nomor.substring(1) +
+             "?text=" + encodeURIComponent(pesan);
+  window.open(wa, "_blank");
 }
 </script>
 
